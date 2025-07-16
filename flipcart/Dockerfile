@@ -1,0 +1,13 @@
+FROM centos:7
+
+# Install httpd
+RUN yum install -y httpd
+
+# Create web page using echo
+RUN echo "<h1>Welcome to flipcart!</h1>" > /var/www/html/index.html
+
+# Expose port 80
+EXPOSE 80
+
+# Start httpd service in foreground
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]

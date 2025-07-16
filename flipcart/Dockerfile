@@ -1,4 +1,4 @@
-FROM centos:7
+FROM almalinux:8
 
 # Install httpd
 RUN yum install -y httpd

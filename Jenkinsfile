@@ -10,7 +10,7 @@ pipeline {
   steps {
     git credentialsId: 'github-token', url: 'https://github.com/Mohit12345789/amazon-df.git', branch: 'main'
   }
-}
+
 
     stage('Build Docker Image') {
       steps {

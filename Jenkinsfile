@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Clone Repo') {
       steps {
-        git credentialsId: 'github-token', url: 'https://github.com/Mohit12345789/amazon-df.git', branch: 'main'
+        git credentialsId: 'github-token', url: 'https://github.com/Mohit12345789/ammazon-df.git', branch: 'main'
       }
     }
 

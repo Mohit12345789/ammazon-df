@@ -6,15 +6,16 @@ pipeline {
     KUBE_CONFIG = credentials('kubeconfig-id') // Jenkins secret for kubeconfig
   }
 
-  stage('Clone Repo') {
-  steps {
-    git credentialsId: 'github-token', url: 'https://github.com/Mohit12345789/amazon-df.git', branch: 'main'
-  }
-
+  stages {
+    stage('Clone Repo') {
+      steps {
+        git credentialsId: 'github-token', url: 'https://github.com/Mohit12345789/amazon-df.git', branch: 'main'
+      }
+    }
 
     stage('Build Docker Image') {
       steps {
-        sh "docker build -t $ammazon:${BUILD_NUMBER} ."
+        sh "docker build -t $IMAGE_NAME:${BUILD_NUMBER} ."
       }
     }
 
@@ -23,7 +24,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh """
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push $ammazon:${BUILD_NUMBER}
+            docker push $IMAGE_NAME:${BUILD_NUMBER}
           """
         }
       }
@@ -33,7 +34,7 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
           sh """
-            kubectl set image deployment/nodejs-deployment nodejs-container=$ammazon:${BUILD_NUMBER}
+            kubectl set image deployment/nodejs-deployment nodejs-container=$IMAGE_NAME:${BUILD_NUMBER}
             kubectl apply -f ingress.yaml
           """
         }

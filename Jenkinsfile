@@ -34,9 +34,9 @@ pipeline {
   steps {
     withCredentials([file(credentialsId: 'kubeconfig-id', variable: 'KUBECONFIG')]) {
       sh """
-        kubectl apply -f deployment.yaml
+        kubectl apply -f deployment.yml
         kubectl set image deployment/nodejs-deployment nodejs-container=7665072317/ammazon-df:${BUILD_NUMBER}
-        kubectl apply -f ingress.yaml
+        kubectl apply -f ingress.yml
       """
     }
   }

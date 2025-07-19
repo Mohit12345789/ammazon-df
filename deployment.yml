@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: nodejs-container
-          image: your-dockerhub-username/eks-nodejs-app:latest
+          image: 7665072317/ammazon:latest
           ports:
             - containerPort: 3000
